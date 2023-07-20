@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnListView, btnGridView, btnRecyclerView, btnBack;
+    private Button btnListView, btnGridView, btnRecyclerView, btnListViewSimple;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         btnListView =findViewById(R.id.btnListView);
         btnGridView = findViewById(R.id.btnGridView);
         btnRecyclerView = findViewById(R.id.btnRecyclerView);
+        btnListViewSimple = findViewById(R.id.btnListViewSimple);
 
 
         btnListView.setOnClickListener(new View.OnClickListener() {
@@ -28,20 +29,27 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnListViewSimple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ListViewSimpleActivity.class);
+                startActivity(intent);
+            }
+        });
         btnGridView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                Intent intent = new Intent(MainActivity.this, GridViewActivity.class);
                 Toast.makeText(MainActivity.this,"Clicked on Gridview Activator", Toast.LENGTH_SHORT).show();
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
         btnRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                Intent intent = new Intent(MainActivity.this, RecyclerViewActivity.class);
                 Toast.makeText(MainActivity.this,"Clicked on Recycler Activator", Toast.LENGTH_SHORT).show();
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
     }

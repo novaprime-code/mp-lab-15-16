@@ -36,6 +36,13 @@
             android:id="@+id/btnListView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Exp. Data from JSON List View"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/btnListViewSimple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Exp. 15 List View"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp" />

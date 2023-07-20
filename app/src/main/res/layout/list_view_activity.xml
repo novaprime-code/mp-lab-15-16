@@ -34,11 +34,11 @@
         app:layout_constraintVertical_bias="0.177">
 
         <Button
-            android:id="@+id/btnLoadFragmentC"
+            android:id="@+id/btnGetListViewData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="Load Fragment C" />
+            android:text="Get Student Data" />
 
         <Button
             android:id="@+id/btnBack"
@@ -50,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="500dp"
         android:layout_marginBottom="10dp"
     app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

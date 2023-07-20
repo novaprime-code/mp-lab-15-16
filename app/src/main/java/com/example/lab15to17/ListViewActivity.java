@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListViewActivity extends AppCompatActivity {
-    private Button btnBack;
+    private Button btnBack, btnGetListViewData;
     private ListView listView;
 
     @Override
@@ -33,27 +33,41 @@ public class ListViewActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         btnBack = findViewById(R.id.btnBack);
+        btnGetListViewData = findViewById(R.id.btnGetListViewData);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        btnGetListViewData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new FetchStudentData().execute();
+            }
+        });
 
-        new FetchStudentData().execute();
+
     }
     private void displayStudents(List<Student> students){
-        ArrayAdapter<Student> adapter = new ArrayAdapter<Student>(this, R.layout.list_item_student, students);
-        // Set the adapter on the ListView
+        StudentAdapter adapter = new StudentAdapter(this, students);
         listView.setAdapter(adapter);
     }
 
+    private void displayToast(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(ListViewActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private class FetchStudentData extends AsyncTask<Void, Void, List<Student>>{
         @Override
         protected List<Student> doInBackground(Void... voids){
             List<Student> students =  new ArrayList<>();
             try {
-                URL url = new URL("http://localhost/mp_practical_api/get_students.php");
+                URL url = new URL("https://jsonplaceholder.typicode.com/users/");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 int responseCode = connection.getResponseCode();
@@ -73,14 +87,19 @@ public class ListViewActivity extends AppCompatActivity {
                     JSONArray jsonArray = new JSONArray(response.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String rollNo = jsonObject.getString("rollNo");
-                        String name = jsonObject.getString("fullname");
-                        String address = jsonObject.getString("address");
+                        String rollNo = jsonObject.getString("id");
+                        String name = jsonObject.getString("name");
+//                        String address = jsonObject.getString("address");
+                        JSONObject addressObject = jsonObject.getJSONObject("address");
+                        String street = addressObject.getString("street");
+                        String suite = addressObject.getString("suite");
+                        String city = addressObject.getString("city");
+                        String address = street +", " + suite + ", "+city;
                         students.add(new Student(rollNo, name, address));
                     }
                 }
             }catch (Exception e){
-                Toast.makeText(ListViewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                displayToast(e.getMessage());
             }
             return students;
         }
@@ -99,12 +118,4 @@ public class ListViewActivity extends AppCompatActivity {
         }
     }
 
-    private void displayToast(final String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(ListViewActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }
